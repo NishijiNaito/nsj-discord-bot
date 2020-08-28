@@ -51,7 +51,7 @@ logging.basicConfig(level=logging.INFO)
 
 bot.cwd = cwd
 
-bot.version = '1'
+bot.version = '2'
 
 bot.colors = {
     'WHITE': 0xFFFFFF,
