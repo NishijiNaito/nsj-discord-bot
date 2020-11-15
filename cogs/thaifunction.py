@@ -3,6 +3,7 @@ from discord.ext import commands
 import json
 from datetime import datetime
 from pythainlp.util import eng_to_thai
+from pythainlp.tokenize import syllable_tokenize
 import asyncio
 
 import cogs._json
@@ -30,6 +31,26 @@ class Thaifunction(commands.Cog):
         msg = await ctx.channel.fetch_message(mid)
 
         await ctx.channel.send(f"> {msg.content}\n{eng_to_thai(msg.content)}")
+
+    @commands.command(name="reverse",
+                      description="ย้อนพยาางค์ สร้างความสับสน",
+                      aliases=['rev'],
+                      usage="<ประโยค>",
+                      )
+    async def reverse(self,ctx, *, sen = None):
+        
+        if sen == None:
+            await ctx.channel.send(f"โปรดป้อนคำตอบด้วยค่ะ", delete_after=10)
+            return
+        
+        rev = ''
+
+        for wor in syllable_tokenize(sen)[::-1]:
+            rev = rev + wor
+
+
+        await ctx.channel.send(f"> {sen}\n{rev}")
+
 
 
 def setup(bot):
